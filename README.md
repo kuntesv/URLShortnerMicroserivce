@@ -1,8 +1,10 @@
-# URLShortnerMicroserivce
+## URL Shortener Microservice
 
-## This is personal project for URL shortner API's
-- This will contain two api's
+This is a personal project for a URL shortener API.
 
-|----------------------|
-| API name |  Endpoint |
-|----------------------|
+It will contain two APIs:
+
+| API Name         | Endpoint          |
+|-----------------|-------------------|
+| Shorten URL      | `/api/shorten`    |
+| Redirect to URL | `/{short_code}` |
