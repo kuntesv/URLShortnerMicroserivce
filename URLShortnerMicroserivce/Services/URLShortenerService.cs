@@ -1,22 +1,31 @@
 ﻿
 using System;
+using Microsoft.EntityFrameworkCore;
+using URLShortnerMicroserivce.Data;
 using URLShortnerMicroserivce.Model;
 
 namespace URLShortnerMicroserivce.Services
 {
     public class URLShortenerService : IUrlShortenerService
     {
+        private UrlShortenerContext _context = new UrlShortenerContext();
 
         private const string Alphabet = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
         
         private Random _random = new Random();
         
-        public Task<string?> GetOriginalUrlAsync(string shortCode)
+        public  async Task<string?> GetOriginalUrlAsync(string shortUrl)
         {
-            throw new NotImplementedException();
+
+            var response =  await _context.UrlMappings.FirstOrDefaultAsync(s => s.shortUrl == shortUrl);
+            if (response != null)
+            {
+                return response.longUrl;
+            }
+            return null;
         }
 
-        public Task<string> ShortenUrlAsync(string originalUrl)
+        public async Task<string> ShortenUrlAsync(string originalUrl)
         {
            var shortcode =  GenerateShortCode();
            var shortUrl = "newgen.ly" + shortcode;
@@ -25,7 +34,10 @@ namespace URLShortnerMicroserivce.Services
             mapping.shortUrl = shortUrl;
             mapping.longUrl = originalUrl;
 
-            throw new NotImplementedException();
+            var response = await _context.UrlMappings.AddAsync(mapping);
+
+            await _context.SaveChangesAsync();
+            return response.Entity.shortUrl;
         }
 
 
