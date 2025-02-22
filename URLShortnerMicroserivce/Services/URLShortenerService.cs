@@ -14,6 +14,12 @@ namespace URLShortnerMicroserivce.Services
         
         private Random _random = new Random();
         
+
+        /// <summary>
+        /// Retrieves the orignal URL associated with the given short URL.
+        /// </summary>
+        /// <param name="shortUrl">Instance of string indicating the short URL.</param>
+        /// <returns>The orignal URL if found; otherwise null.</returns>
         public  async Task<string?> GetOriginalUrlAsync(string shortUrl)
         {
 
@@ -25,6 +31,12 @@ namespace URLShortnerMicroserivce.Services
             return null;
         }
 
+
+        /// <summary>
+        /// Shortnes an orignal URL by generating a unique code and storing into database.
+        /// </summary>
+        /// <param name="originalUrl">Instance of string indicating the orignal URL.</param>
+        /// <returns>The newley generated short URL.</returns>
         public async Task<string> ShortenUrlAsync(string originalUrl)
         {
            var shortcode =  GenerateShortCode();
@@ -46,11 +58,6 @@ namespace URLShortnerMicroserivce.Services
         {
             return new string(Enumerable.Repeat(Alphabet, length).Select(s => s[_random.Next(s.Length)]).ToArray());
         }
-
-
-
-
-
 
 
     }

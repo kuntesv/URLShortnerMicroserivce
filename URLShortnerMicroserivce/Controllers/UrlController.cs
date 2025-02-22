@@ -14,7 +14,6 @@ namespace URLShortnerMicroserivce.Controllers
         /// </summary>
         private IUrlShortenerService _urlShortenerService;
 
-
         public UrlController(IUrlShortenerService urlShortenerService) 
         {
          _urlShortenerService = urlShortenerService;
@@ -34,9 +33,14 @@ namespace URLShortnerMicroserivce.Controllers
             generateShortUrlResponse.longUrl = request.longUrl;
             generateShortUrlResponse.shortUrl = shortUrl;
 
-            return Created(new Uri(""), generateShortUrlResponse);
+            return CreatedAtAction(nameof(generateShortUrl), generateShortUrlResponse);
         }
 
+        /// <summary>
+        /// retrives the orignal URL associated with the short URL.
+        /// </summary>
+        /// <param name="request">Instance of GetOrignalUrlRequest containing the short URL to which find the orignal URL.</param>
+        /// <returns>Response with short URL and long URL along with message if not found it will be error message.</returns>
         [HttpPost("getOrignalUrl")]
         public async Task<IActionResult> getOrignalUrl([FromBody] GetOrignalUrlRequest request)
         {
