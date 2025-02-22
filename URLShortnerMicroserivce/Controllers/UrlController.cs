@@ -44,7 +44,7 @@ namespace URLShortnerMicroserivce.Controllers
             }
             catch (Exception ex)
             {
-                return StatusCode(500, "Internal server error. Unable to process request");
+                return StatusCode(500, "Internal server error. Unable to process request" + ex.Message);
             }
 
         }
